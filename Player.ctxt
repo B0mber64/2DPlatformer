@@ -1,12 +1,12 @@
 #BlueJ class context
 comment0.target=Player
-comment0.text=\r\n\ Write\ a\ description\ of\ class\ Player\ here.\r\n\ \ \ \ \ \ note\:\ \ \ \ \ \ \ probably\ should\ make\ different\ collision\ with\ left\ and\ right\ facing\ character\r\n\ @author\ (your\ name)\ \r\n\ @version\ (a\ version\ number\ or\ a\ date)\r\n
+comment0.text=\r\n\ Write\ a\ description\ of\ class\ Player\ here.\r\n\ @author\ (your\ name)\ \r\n\ @version\ (a\ version\ number\ or\ a\ date)\r\n
 comment1.params=
 comment1.target=void\ act()
 comment1.text=\r\n\ Act\ -\ do\ whatever\ the\ Player\ wants\ to\ do.\ This\ method\ is\ called\ whenever\r\n\ the\ 'Act'\ or\ 'Run'\ button\ gets\ pressed\ in\ the\ environment.\r\n
 comment10.params=
 comment10.target=void\ findPlatform()
-comment10.text=\r\n\ looks\ for\ a\ platfrom\ belowm\ the\ player\ as\ the\ fall\ to\ make\ sure\ \r\n\ they\ don't\ fall\ through\ them.\r\n\ This\ method\ is\ a\ great\ way\ to\ detect\ possible\ collisions\ with\ anything\!\r\n
+comment10.text=\r\n\ looks\ for\ a\ platfrom\ below/above\ the\ player\ as\ they\ fall/jump\ \r\n\ to\ make\ sure\ they\ don't\ move\ through\ them.\r\n\ This\ method\ is\ a\ great\ way\ to\ detect\ possible\ collisions\ with\ anything\!\r\n
 comment11.params=
 comment11.target=boolean\ onPlatform()
 comment11.text=\r\n\ Checks\ if\ the\ player\ is\ on\ a\ platform.\ Prevents\ falling\ through\ blocks.\r\n
@@ -38,6 +38,7 @@ comment5.target=void\ jump()
 comment5.text=\r\n\ Set\ vertical\ speed\ to\ send\ you\ up\ and\ then\ run\ the\ fall\ method.\r\n
 comment6.params=
 comment6.target=void\ collision()
+comment6.text=\r\n\ Sets\ collision\ for\ facing\ left\ or\ right.\r\n
 comment7.params=
 comment7.target=boolean\ drop()
 comment7.text=\r\n\ Allows\ player\ to\ drop\ through\ ledges\ while\ holding\ "s"\r\n
