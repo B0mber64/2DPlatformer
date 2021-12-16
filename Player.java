@@ -14,6 +14,9 @@ public class Player extends Actor
     private int initialJumpStrength=-4;
     private int jumpStrength=-8;
     private int jumpTimer=5;
+    private int floor=1;
+    private int x;
+    private int y;
     private boolean canHitBlock=true;
     private Actor rightFootWidth[]=new Actor[2];
     private Actor leftFootWidth[]=new Actor[2];
@@ -34,8 +37,11 @@ public class Player extends Actor
         canJump();
         collision();
         toTop();
-        wrapAround();
         findPlatform();
+        floors();
+        tp();
+        storage();
+        wrapAround();
     }
     /**
      * Checks keys for moving or jumping.
@@ -95,28 +101,28 @@ public class Player extends Actor
             rightFootWidth[1]=getOneObjectAtOffset(18,getImage().getHeight()/2-1, Platform.class);
             leftFootWidth[0]=getOneObjectAtOffset(-8, getImage().getHeight()/2, Platform.class);
             leftFootWidth[1]=getOneObjectAtOffset(-8,getImage().getHeight()/2-1, Platform.class);
-            rightSideWidth[0]=getOneObjectAtOffset(24, getImage().getHeight()/-2+5, Platform.class);
-            rightSideWidth[1]=getOneObjectAtOffset(24, 0, Platform.class);
-            rightSideWidth[2]=getOneObjectAtOffset(24, getImage().getHeight()/2-5, Platform.class);
-            leftSideWidth[0]=getOneObjectAtOffset(-20, getImage().getHeight()/-2+5, Platform.class);
+            rightSideWidth[0]=getOneObjectAtOffset(24, getImage().getHeight()/-2+5, Block.class);
+            rightSideWidth[1]=getOneObjectAtOffset(24, 0, Block.class);
+            rightSideWidth[2]=getOneObjectAtOffset(24, getImage().getHeight()/2-5, Block.class);
+            leftSideWidth[0]=getOneObjectAtOffset(-20, getImage().getHeight()/-2+5, Block.class);
             leftSideWidth[1]=getOneObjectAtOffset(-20, 0, Platform.class);
-            leftSideWidth[2]=getOneObjectAtOffset(-20, getImage().getHeight()/2-5, Platform.class);
-            rightHeadWidth=getOneObjectAtOffset(20, getImage().getHeight()/-2, Platform.class);
-            leftHeadWidth=getOneObjectAtOffset(-18, getImage().getHeight()/-2, Platform.class);
+            leftSideWidth[2]=getOneObjectAtOffset(-20, getImage().getHeight()/2-5, Block.class);
+            rightHeadWidth=getOneObjectAtOffset(20, getImage().getHeight()/-2, Block.class);
+            leftHeadWidth=getOneObjectAtOffset(-18, getImage().getHeight()/-2, Block.class);
         }
         else{
             rightFootWidth[0]=getOneObjectAtOffset(8,getImage().getHeight()/2, Platform.class);
             rightFootWidth[1]=getOneObjectAtOffset(8,getImage().getHeight()/2-1, Platform.class);
             leftFootWidth[0]=getOneObjectAtOffset(-18, getImage().getHeight()/2, Platform.class);
             leftFootWidth[1]=getOneObjectAtOffset(-18,getImage().getHeight()/2-1, Platform.class);
-            rightSideWidth[0]=getOneObjectAtOffset(20, getImage().getHeight()/-2+5, Platform.class);
-            rightSideWidth[1]=getOneObjectAtOffset(20, 0, Platform.class);
-            rightSideWidth[2]=getOneObjectAtOffset(20, getImage().getHeight()/2-5, Platform.class);
-            leftSideWidth[0]=getOneObjectAtOffset(-24, getImage().getHeight()/-2+5, Platform.class);
-            leftSideWidth[1]=getOneObjectAtOffset(-24, 0, Platform.class);
-            leftSideWidth[2]=getOneObjectAtOffset(-24, getImage().getHeight()/2-5, Platform.class);
-            rightHeadWidth=getOneObjectAtOffset(18, getImage().getHeight()/-2, Platform.class);
-            leftHeadWidth=getOneObjectAtOffset(-20, getImage().getHeight()/-2, Platform.class);
+            rightSideWidth[0]=getOneObjectAtOffset(20, getImage().getHeight()/-2+5, Block.class);
+            rightSideWidth[1]=getOneObjectAtOffset(20, 0, Block.class);
+            rightSideWidth[2]=getOneObjectAtOffset(20, getImage().getHeight()/2-5, Block.class);
+            leftSideWidth[0]=getOneObjectAtOffset(-24, getImage().getHeight()/-2+5, Block.class);
+            leftSideWidth[1]=getOneObjectAtOffset(-24, 0, Block.class);
+            leftSideWidth[2]=getOneObjectAtOffset(-24, getImage().getHeight()/2-5, Block.class);
+            rightHeadWidth=getOneObjectAtOffset(18, getImage().getHeight()/-2, Block.class);
+            leftHeadWidth=getOneObjectAtOffset(-20, getImage().getHeight()/-2, Block.class);
         }
     }
     /**
@@ -124,10 +130,11 @@ public class Player extends Actor
      */
     public boolean drop(){
          Boolean canDrop;
-         Actor leftFoot = leftFootWidth[0];
-         Actor rightFoot = rightFootWidth[0];
+         Actor leftFoot = getOneObjectAtOffset(-8,getImage().getHeight()/2+1, Ledge.class);
+         Actor rightFoot = getOneObjectAtOffset(18, getImage().getHeight()/2+1, Ledge.class);
          if((leftFoot!=null||rightFoot!=null)&&Greenfoot.isKeyDown("s")){
              canDrop=true;
+             fall();
          }
          else{
              canDrop=false;
@@ -140,13 +147,12 @@ public class Player extends Actor
      */
     public void fall()
     {
-        findPlatform();
         setLocation(getX(),getY()+vSpeed);
         if(vSpeed<14){
             accelerationTimer++;
             if(accelerationTimer>=6){ 
-            vSpeed+=acceleration;
-            accelerationTimer=0;
+                vSpeed+=acceleration;
+                accelerationTimer=0;
             }
         }
     }
@@ -170,18 +176,20 @@ public class Player extends Actor
      * This method is a great way to detect possible collisions with anything!
      */
     public void findPlatform(){
-        for(int i=0; i<vSpeed; i++){
-            Actor leftFoot = getOneObjectAtOffset(18,getImage().getHeight()/2+i, Platform.class);
-            Actor rightFoot = getOneObjectAtOffset(-8,getImage().getHeight()/2+i, Platform.class);
-            if(leftFoot!=null||rightFoot!=null){
-                vSpeed=i;
+        if(!Greenfoot.isKeyDown("s")){
+            for(int i=0; i<vSpeed; i++){
+                Actor leftFoot = getOneObjectAtOffset(-8,getImage().getHeight()/2+i, Platform.class);
+                Actor rightFoot = getOneObjectAtOffset(8,getImage().getHeight()/2+i, Platform.class);
+                if(leftFoot!=null||rightFoot!=null&&!drop()){
+                    vSpeed=i;
+                }
             }
         }
         for(int i=0; i>vSpeed; i--){
-            Actor leftHead = getOneObjectAtOffset(18,getImage().getHeight()/-2-i, Platform.class);
-            Actor rightHead = getOneObjectAtOffset(-8,getImage().getHeight()/-2-i, Platform.class);
+            Actor leftHead = getOneObjectAtOffset(-12,getImage().getHeight()/-2-i, Block.class);
+            Actor rightHead = getOneObjectAtOffset(12,getImage().getHeight()/-2-i, Block.class);
             if(leftHead!=null||rightHead!=null){
-                vSpeed=i;
+                vSpeed=i+2;
             }
         }
     }
@@ -231,8 +239,6 @@ public class Player extends Actor
     public int checkBlock()
     {
         int touching=0;
-        Actor headLeft = leftHeadWidth;
-        Actor headRight = rightHeadWidth;
         Actor topLeft = leftSideWidth[0];
         Actor midLeft = leftSideWidth[1];
         Actor bottomLeft = leftSideWidth[2];
@@ -242,50 +248,111 @@ public class Player extends Actor
         if(bottomLeft!=null || midLeft!=null || topLeft!=null){
             touching=1;
         }
-        if(bottomRight!=null || midRight!=null || topRight!=null){
+        else if(bottomRight!=null || midRight!=null || topRight!=null){
             touching=2;
         }
-        if(headLeft!=null || headRight!=null){
-            blockHit();
-        }
         return touching;
-    }
-    /**
-     * pushes you down when you hit the bottom of a block.
-     */
-    public void blockHit(){
-        if(canHitBlock==true){
-            vSpeed=2;
-            fall();
-            canHitBlock=false;
-        }
     }
     /**
      * Checks if you're not standing on a platform.
      */
     public void checkFall()
     {
-        if(onPlatform()){
+        if(onPlatform()&&!drop()){
             vSpeed=0;
         }
         else{
             fall();
         }
     }
+    /**
+     * let's the player wrap from one side of the screen to the other.
+     */
     public void wrapAround(){
         if(getX()<=0){
             setLocation(getWorld().getWidth()-2, getY());
-            if(checkBlock()==1){
+            if(getOneObjectAtOffset(-24, getImage().getHeight()/-2+5, Platform.class)!=null ||
+            getOneObjectAtOffset(-24, 0, Platform.class)!=null || 
+            getOneObjectAtOffset(-24, getImage().getHeight()/2-5, Platform.class)!=null){
                 setLocation(0, getY());
             }
         }
         
         if(getX()>=getWorld().getWidth()-1){
             setLocation(0, getY());
-            if(checkBlock()==2){
+            if(getOneObjectAtOffset(24, getImage().getHeight()/-2+5, Platform.class)!=null ||
+            getOneObjectAtOffset(24, 0, Platform.class)!=null || 
+            getOneObjectAtOffset(24, getImage().getHeight()/2-5, Platform.class)!=null){
                 setLocation(getWorld().getWidth()-2, getY());
             }
         }
         
+    }
+    public void floors(){
+        int x=getX();
+        //  Up a floor
+        if(getY()<=0&&floor==1){
+            x=getX();
+            Greenfoot.setWorld(new Screen2());
+            setLocation(x, getWorld().getHeight()-4);
+            floor++;
+        }
+        if(getY()<=0&&floor==2){
+            x=getX();
+            Greenfoot.setWorld(new Screen3());
+            setLocation(x, getWorld().getHeight()-4);
+            floor++;
+        }
+        if(getY()<=0&&floor==3){
+            x=getX();
+            Greenfoot.setWorld(new Screen4());
+            setLocation(x, getWorld().getHeight()-4);
+            floor++;
+        }
+        if(getY()<=0&&floor==4){
+            x=getX();
+            Greenfoot.setWorld(new Screen5());
+            setLocation(x, getWorld().getHeight()-4);
+            floor++;
+        }
+        //  Down a floor
+        if(getY()>=getWorld().getHeight()-3&&floor==2){
+            x=getX();
+            Greenfoot.setWorld(new Screen1());
+            floor--;
+        }
+        if(getY()>=getWorld().getHeight()-3&&floor==3){
+            Greenfoot.setWorld(new Screen2());
+            setLocation(x, 1);
+            floor--;
+        }
+        if(getY()>=getWorld().getHeight()-3&&floor==4){
+            x=getX();
+            Greenfoot.setWorld(new Screen3());
+            setLocation(x, 1);
+            floor--;
+        }
+        if(getY()>=getWorld().getHeight()-3&&floor==5){
+            x=getX();
+            Greenfoot.setWorld(new Screen4());
+            setLocation(x, 1);
+            floor--;
+        }
+    }
+    public void storage(){
+        if(Greenfoot.isKeyDown("t")){
+            x=getX();
+            y=getY();
+        }
+    }
+    public void tp(){
+        if(Greenfoot.isKeyDown("g")){
+            Greenfoot.setWorld(new Screen2());
+            setLocation(x, y);
+        }
+        if(Greenfoot.isKeyDown("h")){
+            Greenfoot.setWorld(new Screen1());
+            setLocation(x, y);
+        }
     }
 }

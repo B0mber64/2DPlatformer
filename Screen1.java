@@ -6,19 +6,18 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class Screen extends World
+public class Screen1 extends Screens
 {
-    private Player player;
     /**
      * Constructor for objects of class Screen.
      * 
      */
-    public Screen()
+    
+    public Screen1()
     {    
         // Create a new world with 600x600 cells with a cell size of 1x1 pixels.
-        super(600, 600, 1);
-        player=new Player();
-        addObject(player, new Block().getImage().getWidth()*2, getHeight()-100);
+        
+        addObject(new Player(), new Block().getImage().getWidth()*2, getHeight()-100);
         for(int i=0; i<16; i++)
         { 
             addObject(new Block(), new Block().getImage().getWidth()*i, getHeight());
@@ -66,6 +65,13 @@ public class Screen extends World
                 + new Block().getImage().getWidth()*i, 
                 new Block().getImage().getHeight()*4);
             }
+        }
+        for(int i=1; i<4; i++){
+            if((i+1)%2==0){
+                addObject(new Ledge(), new Block().getImage().getWidth()*11
+                + new Block().getImage().getWidth()*i, 
+                new Block().getImage().getHeight()*3);
+            }   
         }
         //ceiling
         for(int i=0; i<12; i++){
