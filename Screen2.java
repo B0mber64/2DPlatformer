@@ -6,18 +6,29 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class Screen2 extends Screens
+public class Screen2 extends World
 {
-
-    /**
-     * Constructor for objects of class Screen1.
-     * 
-     */
+    private int playerX;
+    private boolean up;
     public Screen2()
     {
-        addObject(new Player(), 350, 500);
+        super(600, 600, 1);
+        if(up){
+            addObject(new Player(), playerX, 540);
+        }
+        if(!up){
+            addObject(new Player(), playerX, 540);
+        }
         for(int i=0; i<12; i++){
             addObject(new Block(), new Block().getImage().getWidth()*i, getHeight()); 
         }
+    }
+    
+    public void setPlayerX(int playerX){
+        this.playerX=playerX;
+    }
+    
+    public void setUp(boolean up){
+        this.up=up;
     }
 }

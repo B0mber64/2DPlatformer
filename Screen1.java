@@ -6,18 +6,19 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class Screen1 extends Screens
+public class Screen1 extends World
 {
-    /**
-     * Constructor for objects of class Screen.
-     * 
-     */
-    
+    private int playerX=new Block().getImage().getWidth()*2;
+    private boolean up=true;
     public Screen1()
     {    
-        // Create a new world with 600x600 cells with a cell size of 1x1 pixels.
-        
-        addObject(new Player(), new Block().getImage().getWidth()*2, getHeight()-100);
+        super(600, 600, 1);
+        if(up){
+            addObject(new Player(), playerX, getHeight()-100);
+        }
+        if(!up){
+            addObject(new Player(), playerX, 540);
+        }
         for(int i=0; i<16; i++)
         { 
             addObject(new Block(), new Block().getImage().getWidth()*i, getHeight());
@@ -66,16 +67,29 @@ public class Screen1 extends Screens
                 new Block().getImage().getHeight()*4);
             }
         }
-        for(int i=1; i<4; i++){
-            if((i+1)%2==0){
+        for(int i=1; i<2; i++){
                 addObject(new Ledge(), new Block().getImage().getWidth()*11
                 + new Block().getImage().getWidth()*i, 
                 new Block().getImage().getHeight()*3);
+        }
+        for(int i=1; i<2; i++){
+            if((i+1)%2==0){
+                addObject(new Ledge(), new Block().getImage().getWidth()*13
+                + new Block().getImage().getWidth()*i, 
+                new Block().getImage().getHeight()*2);
             }   
         }
         //ceiling
         for(int i=0; i<12; i++){
             addObject(new Block(), new Block().getImage().getWidth()*i, 0); 
         }
+    }
+    
+    public void setPlayerX(int playerX){
+        this.playerX=playerX;
+    }
+    
+    public void setUp(boolean up){
+        this.up=up;
     }
 }

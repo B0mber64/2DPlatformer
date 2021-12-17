@@ -6,15 +6,12 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class Screen4 extends Screens
+public class Screen4 extends World
 {
-
-    /**
-     * Constructor for objects of class Screen1.
-     * 
-     */
+    
     public Screen4()
     {
+        super(600, 600, 1);
         addObject(new Player(), 350, 500);
         for(int i=0; i<12; i++){
             addObject(new Block(), new Block().getImage().getWidth()*i, getHeight()); 
