@@ -8,88 +8,76 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class Screen1 extends World
 {
-    private int playerX=new Block().getImage().getWidth()*2;
-    private boolean up=true;
     public Screen1()
     {    
         super(600, 600, 1);
-        if(up){
-            addObject(new Player(), playerX, getHeight()-100);
+        Screens screens = new Screens();
+        if(screens.getUp()){
+            addObject(new Player(), screens.block()*2, getHeight()-100);
         }
-        if(!up){
-            addObject(new Player(), playerX, 540);
+        if(!screens.getUp()){
+            addObject(new Player(), screens.getPlayerX(), 1);
         }
+        
         for(int i=0; i<16; i++)
         { 
-            addObject(new Block(), new Block().getImage().getWidth()*i, getHeight());
-            addObject(new Block(), new Block().getImage().getWidth()*i, 
-            getHeight() - new Block().getImage().getHeight());
+            addObject(new Block(), screens.block()*i, getHeight());
+            addObject(new Block(), screens.block()*i, 
+            getHeight() - screens.block());
         }
         //stairs
         for(int i=1; i<=6; i++)
         {
             for(int x=0; x<=i; x++){
-            addObject(new Block(), new Block().getImage().getWidth()*6
-            + new Block().getImage().getWidth()*i, getHeight() 
-            - new Block().getImage().getHeight()*2
-            - new Block().getImage().getHeight()*x);
+            addObject(new Block(), screens.block()*6
+            + screens.block()*i, getHeight() 
+            - screens.block()*2
+            - screens.block()*x);
             }
         }
         for(int i=0; i<=2; i++)
         {
             for(int x=0; x<=3; x++){
-            addObject(new Block(), new Block().getImage().getWidth()*13
-            + new Block().getImage().getWidth()*i, getHeight() 
-            - new Block().getImage().getHeight()*2
-            - new Block().getImage().getHeight()*x);
+            addObject(new Block(), screens.block()*13
+            + screens.block()*i, getHeight() 
+            - screens.block()*2
+            - screens.block()*x);
             }
         }
         //left side blocks
         for(int i=0; i<3; i++)
         {
-            addObject(new Block(), new Block().getImage().getWidth()*i, 
-            getHeight() - new Block().getImage().getHeight()*5);  
+            addObject(new Block(), screens.block()*i, 
+            getHeight() - screens.block()*5);  
         }
         for(int i=0; i<2; i++){
-            addObject(new Block(), new Block().getImage().getWidth()*3, 
-            getHeight() - new Block().getImage().getHeight()*5 -
-            new Block().getImage().getHeight()*i);  
+            addObject(new Block(), screens.block()*3, 
+            getHeight() - screens.block()*5 -
+            screens.block()*i);  
         }
         for(int i=0; i<4; i++){
-            addObject(new Block(), new Block().getImage().getWidth()*i, 
-            new Block().getImage().getHeight()*(5));  
+            addObject(new Block(), screens.block()*i, 
+            screens.block()*(5));  
         }
         //gapped blocks
         for(int i=1; i<7; i++){
             if(i%3==0){
-                addObject(new Block(), new Block().getImage().getWidth()*3
-                + new Block().getImage().getWidth()*i, 
-                new Block().getImage().getHeight()*4);
+                addObject(new Block(), screens.block()*3
+                + screens.block()*i, 
+                screens.block()*4);
             }
         }
-        for(int i=1; i<2; i++){
-                addObject(new Ledge(), new Block().getImage().getWidth()*11
-                + new Block().getImage().getWidth()*i, 
-                new Block().getImage().getHeight()*3);
-        }
-        for(int i=1; i<2; i++){
-            if((i+1)%2==0){
-                addObject(new Ledge(), new Block().getImage().getWidth()*13
-                + new Block().getImage().getWidth()*i, 
-                new Block().getImage().getHeight()*2);
-            }   
-        }
+        addObject(new Ledge(), screens.ledgeStart()*20, 
+        screens.block()*3 - screens.block());
+        
         //ceiling
         for(int i=0; i<12; i++){
-            addObject(new Block(), new Block().getImage().getWidth()*i, 0); 
+            addObject(new Block(), screens.block()*i, 0); 
+        }
+        for(int i=0; i<2; i++){
+            addObject(new Block(), 0, screens.block()+screens.block()*i); 
         }
     }
     
-    public void setPlayerX(int playerX){
-        this.playerX=playerX;
-    }
     
-    public void setUp(boolean up){
-        this.up=up;
-    }
 }

@@ -8,12 +8,12 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 public class Player extends Actor
 {
     private int moveSpeed=4;
-    private int vSpeed=0;
+    private static int vSpeed=0;
     private int acceleration=3;
     private int accelerationTimer=0;
     private int initialJumpStrength=-4;
     private int jumpStrength=-8;
-    private int jumpTimer=5;
+    private static int jumpTimer=5;
     private static int x;
     private static int floor=1;
     private boolean canHitBlock=true;
@@ -286,52 +286,61 @@ public class Player extends Actor
         
     }
     public void floors(){
+        Screens screens = new Screens();
         //  Up a floor
         if(getY()<=0 && floor==1){
-            x=getX();
+            screens.setPlayerX(getX());
+            screens.setUp(true);
             Greenfoot.setWorld(new Screen2());
             setLocation(x, getWorld().getHeight()-4);
             floor=2;
         }
         if(getY()<=0 && floor==2){
-            x=getX();
+            screens.setPlayerX(getX());
+            screens.setUp(true);
             Greenfoot.setWorld(new Screen3());
             setLocation(x, getWorld().getHeight()-4);
             floor=3;
         }
         if(getY()<=0 && floor==3){
-            x=getX();
+            screens.setPlayerX(getX());
+            screens.setUp(true);
             Greenfoot.setWorld(new Screen4());
             setLocation(x, getWorld().getHeight()-4);
             floor=4;
         }
         if(getY()<=0 && floor==4){
-            x=getX();
+            screens.setPlayerX(getX());
+            screens.setUp(true);
             Greenfoot.setWorld(new Screen5());
             setLocation(x, getWorld().getHeight()-4);
             floor=5;
         }
         //  Down a floor
         if(getY()>=getWorld().getHeight()-1 && floor==2){
-            x=getX();
+            screens.setPlayerX(getX());
+            screens.setUp(false);
             Greenfoot.setWorld(new Screen1());
             setLocation(x, 1);
             floor=1;
         }
         if(getY()>=getWorld().getHeight()-1 && floor==3){
-            x=getX();
+            screens.setPlayerX(getX());
+            screens.setUp(false);
             Greenfoot.setWorld(new Screen2());
             setLocation(x, 1);
             floor=2;
         }
         if(getY()>=getWorld().getHeight()-1 && floor==4){
-            x=getX();
+            screens.setPlayerX(getX());
+            screens.setUp(false);
             Greenfoot.setWorld(new Screen3());
             setLocation(x, 1);
             floor=3;
         }
         if(getY()>=getWorld().getHeight()-1 && floor==5){
-            x=getX();
+            screens.setPlayerX(getX());
+            screens.setUp(false);
             Greenfoot.setWorld(new Screen4());
             setLocation(x, 1);
             floor=4;
