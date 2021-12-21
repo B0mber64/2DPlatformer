@@ -16,6 +16,7 @@ public class Player extends Actor
     private static int jumpTimer=5;
     private static int x;
     private static int floor=1;
+    private static boolean loot=false;
     private boolean canHitBlock=true;
     private Actor rightFootWidth[]=new Actor[2];
     private Actor leftFootWidth[]=new Actor[2];
@@ -38,7 +39,26 @@ public class Player extends Actor
         toTop();
         findPlatform();
         floors();
+        checkLoot();
+        win();
         wrapAround();
+    }
+    /**
+     * checks if you touch a chest
+     */
+    public void checkLoot(){
+        Chest c = (Chest) getOneIntersectingObject(Chest.class);
+        if(c != null){
+            loot=true;
+        }
+    }
+    public boolean getLoot(){
+        return loot;
+    }
+    public void win(){
+        if(loot==true && floor==1 && getX()<=0 && getY()>450){
+            Greenfoot.setWorld(new Win());
+        }
     }
     /**
      * Checks keys for moving or jumping.
@@ -104,9 +124,7 @@ public class Player extends Actor
             leftSideWidth[0]=getOneObjectAtOffset(-20, getImage().getHeight()/-2+5, Block.class);
             leftSideWidth[1]=getOneObjectAtOffset(-20, 0, Platform.class);
             leftSideWidth[2]=getOneObjectAtOffset(-20, getImage().getHeight()/2-5, Block.class);
-            rightHeadWidth=getOneObjectAtOffset(20, getImage().getHeight()/-2, Block.class);
-            leftHeadWidth=getOneObjectAtOffset(-18, getImage().getHeight()/-2, Block.class);
-        }
+            }
         else{
             rightFootWidth[0]=getOneObjectAtOffset(8,getImage().getHeight()/2, Platform.class);
             rightFootWidth[1]=getOneObjectAtOffset(8,getImage().getHeight()/2-1, Platform.class);
@@ -118,9 +136,7 @@ public class Player extends Actor
             leftSideWidth[0]=getOneObjectAtOffset(-24, getImage().getHeight()/-2+5, Block.class);
             leftSideWidth[1]=getOneObjectAtOffset(-24, 0, Block.class);
             leftSideWidth[2]=getOneObjectAtOffset(-24, getImage().getHeight()/2-5, Block.class);
-            rightHeadWidth=getOneObjectAtOffset(18, getImage().getHeight()/-2, Block.class);
-            leftHeadWidth=getOneObjectAtOffset(-20, getImage().getHeight()/-2, Block.class);
-        }
+            }
     }
     /**
      * Allows player to drop through ledges while holding "s"
@@ -183,10 +199,18 @@ public class Player extends Actor
             }
         }
         for(int i=0; i>vSpeed; i--){
-            Actor leftHead = getOneObjectAtOffset(-12,getImage().getHeight()/-2-i, Block.class);
-            Actor rightHead = getOneObjectAtOffset(12,getImage().getHeight()/-2-i, Block.class);
+            Actor leftHead;
+            Actor rightHead;
+            if(facingRight){
+                leftHead = getOneObjectAtOffset(-8,getImage().getHeight()/-2-i, Block.class);
+                rightHead = getOneObjectAtOffset(18,getImage().getHeight()/-2-i, Block.class);
+            }
+            else{
+                leftHead = getOneObjectAtOffset(-18,getImage().getHeight()/-2-i, Block.class);
+                rightHead = getOneObjectAtOffset(8,getImage().getHeight()/-2-i, Block.class);
+            }
             if(leftHead!=null||rightHead!=null){
-                vSpeed=i+2;
+                vSpeed=i+1;
             }
         }
     }

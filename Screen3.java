@@ -33,7 +33,7 @@ public class Screen3 extends World
             addObject(new Block(), screens.block()*5+screens.block()*i, getHeight()-screens.block()*5);
         }
         for(int i=0; i<2; i++){
-            addObject(new Ledge(), screens.ledge()*5+screens.ledge()*i, getHeight()-screens.block()*3); 
+            addObject(new Ledge(), screens.block()*11+screens.block()*i, getHeight()-screens.block()*3); 
         }
         for(int i=0; i<3; i++){
             addObject(new Block(), screens.block()*8+screens.block()*i, getHeight()-screens.block()*3); 

@@ -69,10 +69,10 @@ public class Screen2 extends World
             addObject(new Block(), screens.block()*13 + screens.block()*i, screens.block()*5);
         }
         for(int i=1; i<5; i++){
-            addObject(new Block(), getWidth(), screens.block()*i); 
+            addObject(new Block(), getWidth()-7, screens.block()*i); 
         }
         for(int i=1; i<5; i++){
-            addObject(new Block(), getWidth()-screens.block(), screens.block()*i); 
+            addObject(new Block(), getWidth(), screens.block()*i); 
         }
         //ceiling
         for(int i=0; i<2; i++){
