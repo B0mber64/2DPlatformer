@@ -81,7 +81,7 @@ public class Screen2 extends World
         for(int i=0; i<5; i++){
             addObject(new Block(), screens.block()*i, screens.block()*4); 
         }
-        for(int i=0; i<2; i++){
+        for(int i=0; i<1; i++){
             addObject(new Block(), screens.block()*8+screens.block()*i, screens.block());
         }
         for(int i=0; i<8; i++){
