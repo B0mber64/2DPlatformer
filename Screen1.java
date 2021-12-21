@@ -77,6 +77,9 @@ public class Screen1 extends World
         for(int i=0; i<2; i++){
             addObject(new Block(), 0, screens.block()+screens.block()*i); 
         }
+        for(int i=0; i<2; i++){
+            addObject(new Block(), screens.block(), screens.block()+screens.block()*i); 
+        }
     }
     
     

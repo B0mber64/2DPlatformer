@@ -19,8 +19,23 @@ public class Screen4 extends World
             addObject(new Player(), screens.getPlayerX(), 1);
         }
         
-        for(int i=0; i<12; i++){
-            addObject(new Block(), new Block().getImage().getWidth()*i, getHeight()); 
+        for(int i=0; i<3; i++){
+            addObject(new Ledge(), screens.ledge()*i, getHeight()); 
+        }
+        for(int i=0; i<2; i++){
+            addObject(new Ledge(), screens.block()*12+screens.ledge()*i, getHeight()); 
+        }
+        for(int i=0; i<7; i++){
+            addObject(new Block(), screens.block()*4+screens.block()*i, getHeight()); 
+        }
+        for(int i=0; i<4; i++){
+            addObject(new Block(), getWidth(), getHeight()-screens.block()*i); 
+        }
+        for(int i=0; i<4; i++){
+            addObject(new Block(), getWidth()-screens.block()*4, getHeight()-screens.block()*i); 
+        }
+        for(int i=0; i<5; i++){
+            addObject(new Block(), getWidth()-screens.block()*i, getHeight()-screens.block()*4); 
         }
     }
 }

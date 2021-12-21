@@ -37,6 +37,11 @@ public class Screen2 extends World
             - screens.block()*4
             - screens.block()*i); 
         }
+        for(int i=0; i<2; i++){
+            addObject(new Block(), screens.block(), getHeight() 
+            - screens.block()
+            - screens.block()*i); 
+        }
         //middle
         for(int i=3; i<9; i++){
             if(i%4==0){
@@ -51,9 +56,23 @@ public class Screen2 extends World
         for(int i=0; i<7; i++){
             addObject(new Block(), screens.block()*9, screens.block()*5+screens.block()*i); 
         }
-        for(int i=0; i<2; i++){
+        for(int i=0; i<3; i++){
             addObject(new Block(), screens.block()*10 + screens.block()*i, getHeight() 
             - screens.block()*4);
+        }
+        for(int i=0; i<2; i++){
+            addObject(new Block(), screens.block()*10, getHeight() 
+            - screens.block()*6+screens.block()*i); 
+        }
+        addObject(new Block(), screens.block()*12, getHeight()-screens.block()*8);
+        for(int i=0; i<3; i++){
+            addObject(new Block(), screens.block()*13 + screens.block()*i, screens.block()*5);
+        }
+        for(int i=1; i<5; i++){
+            addObject(new Block(), getWidth(), screens.block()*i); 
+        }
+        for(int i=1; i<5; i++){
+            addObject(new Block(), getWidth()-screens.block(), screens.block()*i); 
         }
         //ceiling
         for(int i=0; i<2; i++){
@@ -62,9 +81,15 @@ public class Screen2 extends World
         for(int i=0; i<5; i++){
             addObject(new Block(), screens.block()*i, screens.block()*4); 
         }
-        addObject(new Block(), screens.block()*8, screens.block());
+        for(int i=0; i<2; i++){
+            addObject(new Block(), screens.block()*8+screens.block()*i, screens.block());
+        }
         for(int i=0; i<8; i++){
             addObject(new Block(), screens.block()*8+screens.block()*i, 0); 
         }
+        for(int i=0; i<3; i++){
+            addObject(new Block(), screens.block()*2+screens.block()*i, 0); 
+        }
+        addObject(new Ledge(), screens.ledgeStart(), screens.block()*2);
     }
 }
